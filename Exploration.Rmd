@@ -1,0 +1,49 @@
+---
+title: "Testing blockchains"
+author: "Derek Corcoran"
+date: "7/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## For using blockchain the digest package needs to be used
+
+This is used to create a hash code
+
+```{r}
+library(digest)
+```
+
+
+## Testing simplest blockchain (extracted from [here](https://www.datacamp.com/community/tutorials/blockchain-r))
+
+This is an example of a blockchain
+
+```{r}
+  block_example <- list(index = 1,
+                     timestamp = "2018-01-05 17.00 MST",
+                     data = "some data",
+                     previous_hash = 0,
+                     proof = 9,
+                     new_hash = NULL)
+
+```
+
+
+A blockchains used the last block for the hash of the next, this would be the function
+
+```{r}
+hash_block <- function(block){
+      block$new_hash <- digest(c(block$index,
+                                 block$timestamp,
+                                 block$data,
+                                 block$previous_hash), "sha256")
+      return(block)
+    }
+
+```
+
+
